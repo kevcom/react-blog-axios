@@ -17,7 +17,7 @@ class FullPost extends Component {
 
             if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)) {
 
-                const fullPost = await axios.get(`https://jsonplaceholder.typicode.com/postss/${this.props.id}`);
+                const fullPost = await axios.get(`posts/${this.props.id}`);
 
                 this.setState({loadedPost: fullPost.data});
             }
@@ -25,7 +25,7 @@ class FullPost extends Component {
     }
 
     deletePostHandler = async () => {
-        await axios.delete(`https://jsonplaceholder.typicode.com/posts/${this.state.id}`).catch(e => {
+        await axios.delete(`posts/${this.state.id}`).catch(e => {
             this.setState({error: true});
         });
     }
