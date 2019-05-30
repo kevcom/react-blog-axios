@@ -12,6 +12,8 @@ class Posts extends Component {
     }
 
     async componentDidMount() {
+        console.log(this.props);
+        
         const posts = await axios.get('https://jsonplaceholder.typicode.com/posts').catch(error => {
         	console.log(error);
         });
