@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Switch } from 'react-router-dom';
 
 import Posts from './Posts/Posts';
 import NewPost from 'containers/Blog/NewPost/NewPost';
@@ -16,8 +16,12 @@ class Blog extends Component {
                     <nav className={classes.Nav}>
                         <ul>
                             <li>
-                                <NavLink to="/" exact activeStyle={{color: 'orange'}}>
-                                    Home
+                                <NavLink
+                                    to="/"
+                                    exact
+                                    activeStyle={{color: 'orange'}}
+                                >
+                                    Posts
                                 </NavLink>
                             </li>
                             <li>
@@ -36,8 +40,10 @@ class Blog extends Component {
                         </ul>
                     </nav>
                 </header>
-                <Route path="/" exact component={Posts} />
-                <Route path="/new-post" exact component={NewPost} />
+                <Switch> {/* only loads maximum of one route */}
+                    <Route path="/new-post" exact component={NewPost} />
+                    <Route path="/" component={Posts} />
+                </Switch>
             </div>
         );
     }

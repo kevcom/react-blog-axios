@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import axios from 'axios';
 
+// import { Link } from 'react-router-dom';
+
 import Post from '../../../components/Post/Post';
 import classes from './Posts.module.css';
+import FullPost from 'containers/Blog/FullPost/FullPost';
 
 class Posts extends Component {
 
@@ -12,8 +16,7 @@ class Posts extends Component {
     }
 
     async componentDidMount() {
-        console.log(this.props);
-        
+
         const posts = await axios.get('https://jsonplaceholder.typicode.com/posts').catch(error => {
         	console.log(error);
         });
@@ -31,23 +34,36 @@ class Posts extends Component {
     }
 
     postSelectedHandler = (id) => {
-        this.setState({ selectedPostId: id })
+        //this.setState({ selectedPostId: id })
+        this.props.history.push({
+            pathname: `/post/${id}`
+        });
     }
 
 	render() {
         const posts = this.state.posts.map(post => {
-	        return <Post
-	            clicked={() => this.postSelectedHandler(post.id)}
-	            key={post.id}
-	            title={post.title}
-	            author={post.author}
-	        />
+	        return (
+                // <Link
+                //     key={post.id}
+                //     to={`/post/${post.id}`}
+                // >
+                    <Post
+        	            clicked={() => this.postSelectedHandler(post.id)}
+        	            key={post.id}
+        	            title={post.title}
+        	            author={post.author}
+	               />
+                // </Link>
+            )
         });
 
 		return (
-			<section className={classes.Posts}>
-                {posts}
-            </section>
+            <div>
+    			<section className={classes.Posts}>
+                    {posts}
+                </section>
+                <Route path={this.props.match.url + 'post/:id'} exact component={FullPost} />
+            </div>
 		);
 	}
 }
